@@ -7,6 +7,7 @@ import {
   HorizontaLDots,
   ListIcon,
   PageIcon,
+  PencilIcon,
   PlugInIcon,
   TableIcon,
 } from "../icons";
@@ -20,6 +21,14 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
+  {
+    name: "Content Editor",
+    icon: <PencilIcon />,
+    subItems: [
+      { name: "Home Page", path: "/edit-home", pro: false },
+      { name: "About Us", path: "/edit-about", pro: false },
+    ],
+  },
   {
     icon: <GridIcon />,
     name: "Dashboard",
