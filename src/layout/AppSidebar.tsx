@@ -6,10 +6,8 @@ import {
   GridIcon,
   HorizontaLDots,
   ListIcon,
-  PageIcon,
   PencilIcon,
-  PlugInIcon,
-  TableIcon,
+  UserIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 
@@ -30,6 +28,11 @@ const navItems: NavItem[] = [
     ],
   },
   {
+    name: "Misioneros",
+    icon: <UserIcon />,
+    path: "/missionaries"
+  },
+  {
     icon: <GridIcon />,
     name: "Dashboard",
     subItems: [{ name: "Ecommerce", path: "/", pro: false }],
@@ -39,29 +42,9 @@ const navItems: NavItem[] = [
     icon: <ListIcon />,
     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
   },
-  {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
-  },
 ];
 
 const othersItems: NavItem[] = [
-  {
-    icon: <PlugInIcon />,
-    name: "Authentication",
-    subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-    ],
-  },
 ];
 
 const AppSidebar: React.FC = () => {
@@ -303,22 +286,22 @@ const AppSidebar: React.FC = () => {
               </h2>
               {renderMenuItems(navItems, "main")}
             </div>
-            <div className="">
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(othersItems, "others")}
-            </div>
+            {othersItems.length ? <div className="">
+                  <h2
+                      className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                          !isExpanded && !isHovered
+                              ? "lg:justify-center"
+                              : "justify-start"
+                      }`}
+                  >
+                    {isExpanded || isHovered || isMobileOpen ? (
+                        "Others"
+                    ) : (
+                        <HorizontaLDots />
+                    )}
+                  </h2>
+                  {renderMenuItems(othersItems, "others")}
+                </div> : ''}
           </div>
         </nav>
       </div>
