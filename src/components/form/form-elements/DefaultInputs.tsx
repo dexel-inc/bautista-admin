@@ -4,7 +4,6 @@ import Label from "../Label";
 import Input from "../input/InputField";
 import Select from "../Select";
 import { EyeCloseIcon, EyeIcon, TimeIcon } from "../../../icons";
-import DatePicker from "../date-picker.tsx";
 
 export default function DefaultInputs() {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,18 +54,6 @@ export default function DefaultInputs() {
               )}
             </button>
           </div>
-        </div>
-
-        <div>
-          <DatePicker
-            id="date-picker"
-            label="Date Picker Input"
-            placeholder="Select a date"
-            onChange={(dates, currentDateString) => {
-              // Handle your logic
-              console.log({ dates, currentDateString });
-            }}
-          />
         </div>
 
         <div>
