@@ -20,6 +20,11 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
+    icon: <GridIcon />,
+    name: "Dashboard",
+    subItems: [{ name: "Estadísticas", path: "/", pro: false }],
+  },
+  {
     name: "Content Editor",
     icon: <PencilIcon />,
     subItems: [
@@ -31,11 +36,6 @@ const navItems: NavItem[] = [
     name: "Misioneros",
     icon: <UserIcon />,
     path: "/missionaries"
-  },
-  {
-    icon: <GridIcon />,
-    name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
   {
     name: "Forms",
