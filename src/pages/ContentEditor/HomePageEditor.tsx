@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import LanguageInputGroup from "../../components/form/LanguageInputGroup";
+import Button from "../..//components/ui/button/Button.tsx";
 
 interface ContentData {
   [key: string]: { es: string; en: string };
@@ -149,11 +150,7 @@ const HomePageEditor: React.FC = () => {
         {/* Botones de acción */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex gap-4 justify-end">
-            <button
-                onClick={handleSave}
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-brand-500 bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-brand-600 lg:inline-flex lg:w-auto">
-              Guardar Cambios
-            </button>
+            <Button variant="primary" onClick={handleSave}> Guardar </Button>
           </div>
         </div>
       </div>
