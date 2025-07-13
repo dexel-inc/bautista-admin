@@ -36,12 +36,7 @@ const navItems: NavItem[] = [
     name: "Misioneros",
     icon: <UserIcon />,
     path: "/missionaries"
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
+  }
 ];
 
 const othersItems: NavItem[] = [
