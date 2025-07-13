@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router";
 import SignIn from "./pages/AuthPages/SignIn";
 import NotFound from "./pages/OtherPage/NotFound";
 import Missionaries from "./pages/Missionaries/Missionaries.tsx";
-import FormElements from "./pages/Forms/FormElements";
 import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
@@ -23,7 +22,6 @@ export default function App() {
             <Route path="/edit-home" element={<HomePageEditor />} />
             <Route path="/edit-about" element={<AboutUsEditor />} />
             <Route path="/blank" element={<Blank />} />
-            <Route path="/form-elements" element={<FormElements />} />
             <Route path="/missionaries" element={<Missionaries />} />
             <Route path="/missionaries/create" element={<MissionariesCreateForm />} />
             <Route path="/missionaries/:missionaryId" element={<MissionaryDetail />} />
