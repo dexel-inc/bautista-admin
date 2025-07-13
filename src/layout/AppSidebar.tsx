@@ -5,7 +5,6 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  ListIcon,
   PencilIcon,
   UserIcon,
 } from "../icons";
