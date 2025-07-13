@@ -128,14 +128,6 @@ const HomePageEditor: React.FC = () => {
               englishLabel: "Support Description (English)",
               type: "textarea",
             },
-          ]}
-          contentData={contentData}
-          updateContent={updateContent}
-        />
-
-        <LanguageInputGroup
-          title="Mensaje de Agradecimiento"
-          fields={[
             {
               section: "thanks",
               spanishLabel: "Mensaje de Agradecimiento (Español)",
