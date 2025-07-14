@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import React from "react";
 
 interface BreadcrumbProps {
-  pageTitle: string;
+  pageTitle?: string|null;
   children?: React.ReactNode|null;
   others?: React.ReactNode|null;
 }

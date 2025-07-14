@@ -1,50 +1,59 @@
+import { useEffect } from "react";
 import PageMeta from "../../components/common/PageMeta";
 import {Link, useNavigate, useParams} from 'react-router';
-import {missionaries} from "../../components/tables/MissionariesTable.tsx";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb.tsx";
+import { useMissionary } from "@/hooks/useMissionary.ts";
 
 export default function MissionaryDetail() {
     const {missionaryId} = useParams();
+    const { missionary, loading } = useMissionary(parseInt(missionaryId ?? ''));
     const navigate = useNavigate();
 
-    let missionary = missionaries.find((missionary) => missionary.id === Number.parseInt(missionaryId ?? '0'));
+    useEffect(() => {
+        if (!loading && !missionary) {
+            navigate("not-found");
+        }
+    }, [missionary, loading, navigate]);
 
-    if(!missionary) {
-        navigate("not-found")
-        return;
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
+
+    if (!loading && !missionary) {
+        return null;
     }
 
     return (
         <>
-            <PageMeta title={`IBF - ${missionary.family}`} description="Missionary detail"/>
-            <PageBreadcrumb pageTitle={missionary.family} others={
+            <PageMeta title={`IBF - ${missionary?.family}`} description="Missionary detail"/>
+            <PageBreadcrumb pageTitle={missionary?.family} others={
                 <li className="text-sm self-center">
                     <Link
-                            className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
-                            to="/missionaries"
+                        className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
+                        to="/missionaries"
+                    >
+                        Misioneros
+                        <svg
+                            className="stroke-current"
+                            width="17"
+                            height="16"
+                            viewBox="0 0 17 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                         >
-                            Misioneros
-                            <svg
-                                className="stroke-current"
-                                width="17"
-                                height="16"
-                                viewBox="0 0 17 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6.0765 12.667L10.2432 8.50033L6.0765 4.33366"
-                                    stroke=""
-                                    strokeWidth="1.2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
-                        </Link>
+                            <path
+                                d="M6.0765 12.667L10.2432 8.50033L6.0765 4.33366"
+                                stroke=""
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </Link>
                 </li>
             }>
-                <button
-                    className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
+                <Link to={`/missionaries/${missionary?.id}/edit`}
+                      className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
                 >
                     <svg
                         className="fill-current"
@@ -62,11 +71,11 @@ export default function MissionaryDetail() {
                         />
                     </svg>
                     Editar
-                </button>
+                </Link>
             </PageBreadcrumb>
             <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 flex flex-col lg:flex-row gap-6">
                 <div className="w-full">
-                    <img className="h-80 w-full lg:w-auto" src={missionary.img} title={missionary.family} alt={missionary.family}/>
+                    <img className="h-80 w-full lg:w-auto" src={missionary?.img ?? ''} title={missionary?.family ?? ''} alt={missionary?.family ?? ''}/>
                 </div>
                 <div className="w-full">
                     <div className="pb-6 w-full">
@@ -74,7 +83,7 @@ export default function MissionaryDetail() {
                             Descripción
                         </p>
                         <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                            {missionary.description}
+                            {missionary?.description}
                         </p>
                     </div>
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -85,7 +94,7 @@ export default function MissionaryDetail() {
                                         Nombre de contacto
                                     </p>
                                     <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                                        {missionary.user.name}
+                                        {missionary?.user?.name}
                                     </p>
                                 </div>
                                 <div className="w-full">
@@ -93,7 +102,7 @@ export default function MissionaryDetail() {
                                         Correo electrónico
                                     </p>
                                     <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                                        {missionary.user.email}
+                                        {missionary?.user?.email}
                                     </p>
                                 </div>
                                 <div className="w-full">
@@ -101,7 +110,7 @@ export default function MissionaryDetail() {
                                         Ubicación
                                     </p>
                                     <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                                        {missionary.address}
+                                        {missionary?.address}
                                     </p>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@ import Home from "./pages/Dashboard/Home";
 import HomePageEditor from "./pages/ContentEditor/HomePageEditor";
 import AboutUsEditor from "./pages/ContentEditor/AboutUsEditor";
 import MissionaryDetail from "./pages/Missionaries/MissionaryDetail.tsx";
-import MissionariesCreateForm from "./pages/Missionaries/MissionariesCreateForm.tsx";
+import MissionaryForm from "./pages/Missionaries/MissionaryForm.tsx";
 
 export default function App() {
   return (
@@ -23,8 +23,9 @@ export default function App() {
             <Route path="/edit-about" element={<AboutUsEditor />} />
             <Route path="/blank" element={<Blank />} />
             <Route path="/missionaries" element={<Missionaries />} />
-            <Route path="/missionaries/create" element={<MissionariesCreateForm />} />
+            <Route path="/missionaries/create" element={<MissionaryForm />} />
             <Route path="/missionaries/:missionaryId" element={<MissionaryDetail />} />
+            <Route path="/missionaries/:missionaryId/edit" element={<MissionaryForm />} />
           </Route>
           <Route path="/signin" element={<SignIn />} />
           <Route path="*" element={<NotFound />} />

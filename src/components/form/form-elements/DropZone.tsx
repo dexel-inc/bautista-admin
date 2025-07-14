@@ -9,20 +9,17 @@ interface DropzoneProps {
 export default function DropZone({uploadFile, setUploadFile}: DropzoneProps) {
   const [imagePreview, setImagePreview] = useState<string>('');
 
-  // Sincronizar imagePreview cuando uploadFile cambie
   useEffect(() => {
     if (uploadFile) {
       const url = URL.createObjectURL(uploadFile);
       console.log(`Creating preview URL for ${uploadFile.name}:`, url);
 
-      // Limpiar URL anterior
       if (imagePreview) {
         URL.revokeObjectURL(imagePreview);
       }
 
       setImagePreview(url);
     } else {
-      // Limpiar preview si no hay archivo
       if (imagePreview) {
         URL.revokeObjectURL(imagePreview);
       }
@@ -40,7 +37,6 @@ export default function DropZone({uploadFile, setUploadFile}: DropzoneProps) {
     setUploadFile(null);
   };
 
-  // Limpiar URLs cuando el componente se desmonte
   useEffect(() => {
     return () => {
       if (imagePreview) {
