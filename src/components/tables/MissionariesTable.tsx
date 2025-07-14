@@ -6,8 +6,9 @@ import {
   TableRow,
 } from "../ui/table";
 
-import Badge from "../ui/badge/Badge";
+import Toggle from "../ui/toggle/Toggle";
 import {Link} from "react-router";
+import { useState } from "react";
 
 interface Missionary {
   id: number;
@@ -86,6 +87,18 @@ export const missionaries: Missionary[] = [
 ];
 
 export default function MissionariesTable() {
+  const [missionariesData, setMissionariesData] = useState(missionaries);
+
+  const handleStatusChange = (id: number, isActive: boolean) => {
+    setMissionariesData(prevData => 
+      prevData.map(missionary => 
+        missionary.id === id 
+          ? { ...missionary, status: isActive ? "Active" : "Inactive" }
+          : missionary
+      )
+    );
+  };
+
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -120,7 +133,7 @@ export default function MissionariesTable() {
           </TableHeader>
 
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-            {missionaries.map((missionary) => (
+            {missionariesData.map((missionary) => (
               <TableRow key={missionary.id}>
                 <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                   <Link to={`/missionaries/${missionary.id}`} className="hover:text-brand-500">
@@ -143,16 +156,15 @@ export default function MissionariesTable() {
                   {missionary.address}
                 </TableCell>
                 <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                  <Badge
-                    size="sm"
-                    color={
-                      missionary.status === "Active"
-                        ? "success"
-                        : "error"
-                    }
-                  >
-                    {missionary.status}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Toggle 
+                      isActive={missionary.status === "Active"}
+                      onChange={(isActive) => handleStatusChange(missionary.id, isActive)}
+                    />
+                    <span className="text-theme-xs">
+                      {missionary.status === "Active" ? "Activo" : "Inactivo"}
+                    </span>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
