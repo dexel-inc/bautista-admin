@@ -52,9 +52,21 @@ async function update(id: number, data: Partial<Missionary>): Promise<Missionary
     return updated;
 }
 
+async function remove(id: number): Promise<boolean> {
+    const missionaries = getStoredMissionaries();
+    const index = missionaries.findIndex((m) => m.id === id);
+
+    if (index === -1) return false;
+
+    saveMissionaries(missionaries.filter((missionary) => missionary.id !== id));
+
+    return true;
+}
+
 export default {
     index,
     show,
     store,
     update,
+    remove,
 };

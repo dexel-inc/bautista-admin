@@ -5,6 +5,7 @@ import { ReactComponent as CheckCircleIcon } from "./check-circle.svg?react";
 import { ReactComponent as AlertIcon } from "./alert.svg?react";
 import { ReactComponent as InfoIcon } from "./info.svg?react";
 import { ReactComponent as ErrorIcon } from "./info-error.svg?react";
+import { ReactComponent as NotFoundProfile } from "./not-found-profile.svg?react";
 import { ReactComponent as BoltIcon } from "./bolt.svg?react";
 import { ReactComponent as ArrowUpIcon } from "./arrow-up.svg?react";
 import { ReactComponent as ArrowDownIcon } from "./arrow-down.svg?react";
@@ -81,6 +82,7 @@ export {
   ShootingStarIcon,
   DollarLineIcon,
   TrashBinIcon,
+  NotFoundProfile,
   AngleUpIcon,
   AngleDownIcon,
   PencilIcon,

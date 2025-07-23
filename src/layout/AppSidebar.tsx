@@ -4,8 +4,7 @@ import { Link, useLocation } from "react-router";
 import {
   ChevronDownIcon,
   GridIcon,
-  HorizontaLDots,
-  PencilIcon,
+  HorizontaLDots, ListIcon,
   UserIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
@@ -24,17 +23,14 @@ const navItems: NavItem[] = [
     subItems: [{ name: "Estadísticas", path: "/", pro: false }],
   },
   {
-    name: "Content Editor",
-    icon: <PencilIcon />,
-    subItems: [
-      { name: "Home Page", path: "/edit-home", pro: false },
-      { name: "About Us", path: "/edit-about", pro: false },
-    ],
-  },
-  {
     name: "Misioneros",
     icon: <UserIcon />,
     path: "/missionaries"
+  },
+  {
+    name: "Testimonios",
+    icon: <ListIcon />,
+    path: "/testimonies"
   }
 ];
 

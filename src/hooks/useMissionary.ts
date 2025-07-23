@@ -34,6 +34,16 @@ export function useMissionaries() {
         return updated;
     };
 
+    const deleteMissionary = async (id: number) => {
+        const deleted = await service.remove(id);
+        if (deleted) {
+            setMissionaries((prev) =>
+                prev.filter((missionary) => (missionary.id !== id))
+            );
+        }
+        return deleted;
+    };
+
     const storeOrUpdateMissionary = async (data: Partial<Missionary>|Missionary, id?: number|null) => {
         if(id) {
             return await updateMissionary(id, data);
@@ -47,6 +57,7 @@ export function useMissionaries() {
     return {
         missionaries,
         loading,
+        deleteMissionary,
         fetchMissionaries,
         addMissionary,
         updateMissionary,

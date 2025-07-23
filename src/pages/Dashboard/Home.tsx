@@ -1,5 +1,5 @@
-import StatisticsChart from "../../components/ecommerce/StatisticsChart";
-import DemographicCard from "../../components/ecommerce/DemographicCard";
+import StatisticsChart from "@/components/statistics/StatisticsChart";
+import DemographicCard from "@/components/statistics/DemographicCard";
 import PageMeta from "../../components/common/PageMeta";
 
 export default function Home() {
