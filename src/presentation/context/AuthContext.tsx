@@ -1,22 +1,23 @@
 import {useEffect, useState} from "react";
 import {User} from "@/domain/models/User.ts";
 import authService from "@/domain/services/Auth.service.ts";
-import {getUser, setUser} from "@/domain/storage/user";
+import {getUser, setUser} from "@/domain/storage/user.ts";
 
 import { createContext } from 'react';
+import {AuthUser} from "@/domain/models/AuthUser.ts";
 
 export interface AuthContextType {
     login: (data: Partial<User>) => Promise<{ user: User | null; success: boolean; error?: any }>;
     logout: () => Promise<boolean>;
     isLoading: boolean;
-    activeUser: User | null;
+    activeUser: AuthUser | null;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [activeUser, setActiveUser] = useState<User | null>(null);
+    const [activeUser, setActiveUser] = useState<AuthUser | null>(null);
 
     const login = async (data: Partial<User>) => {
         setIsLoading(true);

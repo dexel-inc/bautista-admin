@@ -11,46 +11,49 @@ import MissionaryDetail from "@/presentation/pages/Missionaries/MissionaryDetail
 import { useAuth } from "@/domain/hooks/useAuth.ts";
 
 export function RenderRoutes() {
-    const { activeUser } = useAuth();
+    const { activeUser, isLoading} = useAuth();
 
     return (
         <Routes>
             <Route element={<AppLayout />}>
                 <Route
                     path="/"
-                    element={activeUser ? <Home /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <Home /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/testimonies"
-                    element={activeUser ? <Testimonies /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <Testimonies /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/testimonies/create"
-                    element={activeUser ? <TestimonyForm /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <TestimonyForm /> : <Navigate to="/signin" replace />}
+                />
+                <Route
+                    path="/testimonies/:testimonyId/edit"
+                    element={activeUser || isLoading ? <TestimonyForm /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/missionaries"
-                    element={activeUser ? <Missionaries /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <Missionaries /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/missionaries/create"
-                    element={activeUser ? <MissionaryForm /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <MissionaryForm /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/missionaries/:missionaryId"
-                    element={activeUser ? <MissionaryDetail /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <MissionaryDetail /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/missionaries/:missionaryId/edit"
-                    element={activeUser ? <MissionaryForm /> : <Navigate to="/signin" replace />}
+                    element={activeUser || isLoading ? <MissionaryForm /> : <Navigate to="/signin" replace />}
                 />
             </Route>
 
             <Route
                 path="/signin"
-                element={activeUser ? <Navigate to="/" replace /> : <SignIn />}
+                element={activeUser?.user ? <Navigate to="/" replace /> : <SignIn />}
             />
-
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

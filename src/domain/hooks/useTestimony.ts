@@ -24,11 +24,11 @@ export function useTestimonies() {
         return newTestimony
     };
 
-    const updateTestimony = async (id: number, data: Partial<Testimony>) => {
-        const updated = await service.update(id, data);
+    const updateTestimony = async (testimony: Partial<Testimony>, data: Partial<Testimony>) => {
+        const updated = await service.update(testimony, data);
         if (updated) {
             setTestimonies((prev) =>
-                prev.map((testimony) => (testimony.id === id ? updated : testimony))
+                prev.map((testimonyN) => (testimonyN.id === testimonyN.id ? updated : testimony))
             );
         }
         return updated;
@@ -44,9 +44,9 @@ export function useTestimonies() {
         return deleted;
     };
 
-    const storeOrUpdateTestimony = async (data: Partial<Testimony>|Testimony, id?: number|null) => {
-        if(id) {
-            return await updateTestimony(id, data);
+    const storeOrUpdateTestimony = async (data: Partial<Testimony>|Testimony, testimony: Testimony|null) => {
+        if(testimony) {
+            return await updateTestimony(testimony, data);
         }
 
         return await addTestimony(data);

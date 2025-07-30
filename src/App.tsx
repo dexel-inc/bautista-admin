@@ -3,7 +3,7 @@ import { ScrollToTop } from "@/presentation/components/common/ScrollToTop";
 import {useEffect} from "react";
 import service from "@/domain/services/service.ts";
 import {RenderRoutes} from "@/presentation/routes";
-import {AuthProvider} from "@/domain/contexts/AuthContext.tsx";
+import {AuthProvider} from "@/presentation/context/AuthContext.tsx";
 
 export default function App() {
   useEffect(() => {

@@ -3,7 +3,7 @@ import testimoniesData from "@/domain/mocks/testimonies.ts";
 
 const STORAGE_KEY = "mock_testimonies";
 
-function getStoredTestimonies(): Testimony[] {
+function getStoredTestimonies(): Partial<Testimony>[] {
     let data = localStorage.getItem(STORAGE_KEY);
 
     if(!data) {
@@ -15,22 +15,22 @@ function getStoredTestimonies(): Testimony[] {
     return data ? JSON.parse(data) : [];
 }
 
-function saveTestimonies(testimonies: Testimony[]) {
+function saveTestimonies(testimonies: Partial<Testimony>[]) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(testimonies));
 }
 
-async function index(): Promise<Testimony[]> {
+async function index(): Promise<Partial<Testimony>[]> {
     return getStoredTestimonies();
 }
 
-async function show(id: number): Promise<Testimony | undefined> {
+async function show(id: number): Promise<Partial<Testimony> | undefined> {
     const testimonies = getStoredTestimonies();
     return testimonies.find((m) => m.id === id);
 }
 
-async function store(data: Partial<Testimony>): Promise<Testimony> {
+async function store(data: Partial<Testimony>): Promise<Partial<Testimony>> {
     const testimonies = getStoredTestimonies();
-    const newTestimony: Testimony = {
+    const newTestimony: Partial<Testimony> = {
         ...data,
         id: testimonies.length + 1,
     };
@@ -39,9 +39,9 @@ async function store(data: Partial<Testimony>): Promise<Testimony> {
     return newTestimony;
 }
 
-async function update(id: number, data: Partial<Testimony>): Promise<Testimony | null> {
+async function update(testimony: Partial<Testimony>, data: Partial<Testimony>): Promise<Partial<Testimony> | null> {
     const testimonies = getStoredTestimonies();
-    const index = testimonies.findIndex((m) => m.id === id);
+    const index = testimonies.findIndex((m) => m.id === testimony.id);
 
     if (index === -1) return null;
 

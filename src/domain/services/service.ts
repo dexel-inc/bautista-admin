@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from '@/domain/config';
-import {getUser} from "@/domain/storage/user.ts";
+import {getUser, setUser} from "@/domain/storage/user.ts";
+import {useNavigate} from "react-router";
 
 const user = getUser();
 
@@ -17,4 +18,20 @@ const service = axios.create({
     xsrfCookieName: 'XSRF-TOKEN',
     xsrfHeaderName: "X-XSRF-TOKEN",
 });
+
+axios.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response && error.response.status === 401) {
+            setUser(null);
+            const navigate = useNavigate();
+            if(navigate) {
+                navigate('signin')
+            } else {
+                window.location.href = '/signin';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 export default service;

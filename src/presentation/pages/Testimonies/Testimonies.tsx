@@ -22,7 +22,7 @@ export default function Testimonies() {
                 </Link>
             </div>
         </PageBreadcrumb>
-        <div className="space-y-6">
+        <div className="space-y-6 h-full">
           <TestimoniesTable />
         </div>
     </>
