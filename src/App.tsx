@@ -1,8 +1,8 @@
 import { BrowserRouter as Router} from "react-router";
-import { ScrollToTop } from "./components/common/ScrollToTop";
+import { ScrollToTop } from "@/presentation/components/common/ScrollToTop";
 import {useEffect} from "react";
 import service from "@/domain/services/service.ts";
-import {RenderRoutes} from "@/routes";
+import {RenderRoutes} from "@/presentation/routes";
 import {AuthProvider} from "@/domain/contexts/AuthContext.tsx";
 
 export default function App() {
