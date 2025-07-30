@@ -27,12 +27,10 @@ const LayoutContent: React.FC = () => {
   );
 };
 
-const AppLayout: React.FC = () => {
+export const AppLayout: React.FC = () => {
   return (
     <SidebarProvider>
       <LayoutContent />
     </SidebarProvider>
   );
 };
-
-export default AppLayout;

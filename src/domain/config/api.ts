@@ -1,3 +1,3 @@
 export default {
-   url: '',
+   url: 'http://bautista-iglesia-api.test',
 }
