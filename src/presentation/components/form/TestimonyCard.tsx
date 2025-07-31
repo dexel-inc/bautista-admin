@@ -5,6 +5,7 @@ import {DropdownItem} from "@/presentation/components/ui/dropdown/DropdownItem.t
 import {Testimony} from "@/domain/models/Testimony.ts";
 import {useDropdown} from "@/domain/hooks/useDropdown.ts";
 import {Link} from "react-router";
+import {useState} from "react";
 
 interface TestimonyProps {
   testimony: Testimony;
@@ -14,6 +15,10 @@ interface TestimonyProps {
 
 export default function TestimonyCard({testimony, openModal}: TestimonyProps) {
   const { isOpenDropdown, toggleDropdown, closeDropdown } = useDropdown();
+  const [expanded, setExpanded] = useState(false);
+
+  const isLong = testimony.content.length > 255;
+  const displayText = expanded ? testimony.content : testimony.content.slice(0, 255);
 
   return (
       <div className="group relative mt-2">
@@ -51,8 +56,18 @@ export default function TestimonyCard({testimony, openModal}: TestimonyProps) {
               </div>
               <div className="mt-10">
                 <h4 className="mb-1 font-medium text-gray-800 text-theme-xl dark:text-white/90">{testimony.name}</h4>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{testimony.content}</p>
-              </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {displayText}
+                  {isLong && !expanded && "... "}
+                  {isLong && (
+                      <button
+                          onClick={() => setExpanded(!expanded)}
+                          className="text-brand-500 hover:underline ml-1"
+                      >
+                        {expanded ? "ver menos" : "ver más"}
+                      </button>
+                  )}
+                </p>              </div>
             </div>
           </ComponentCard>
         </div>

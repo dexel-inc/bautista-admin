@@ -1,12 +1,13 @@
 export interface Missionary {
     id: number;
-    description?: string,
-    family?: string;
+    title?: string,
+    message?: string;
+    status?: string|null;
     user?: {
         name?: string;
         email?: string;
     };
-    address?: string;
-    status?: string;
-    img?: string;
+    disabled_at?: string|null;
+    image?: string;
+    imageFile?: null|File;
 }

@@ -39,9 +39,9 @@ async function store(data: Partial<Missionary>): Promise<Missionary> {
     return newMissionary;
 }
 
-async function update(id: number, data: Partial<Missionary>): Promise<Missionary | null> {
+async function update(missionary: Partial<Missionary>, data: Partial<Missionary>): Promise<Missionary | null> {
     const missionaries = getStoredMissionaries();
-    const index = missionaries.findIndex((m) => m.id === id);
+    const index = missionaries.findIndex((m) => m.id === missionary.id);
 
     if (index === -1) return null;
 

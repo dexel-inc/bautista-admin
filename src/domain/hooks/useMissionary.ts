@@ -24,11 +24,11 @@ export function useMissionaries() {
         return newMissionary
     };
 
-    const updateMissionary = async (id: number, data: Partial<Missionary>) => {
-        const updated = await service.update(id, data);
+    const updateMissionary = async (missionary: Partial<Missionary>, data: Partial<Missionary>) => {
+        const updated = await service.update(missionary, data);
         if (updated) {
             setMissionaries((prev) =>
-                prev.map((missionary) => (missionary.id === id ? updated : missionary))
+                prev.map((missionary) => (missionary.id === missionary.id ? updated : missionary))
             );
         }
         return updated;
@@ -44,9 +44,9 @@ export function useMissionaries() {
         return deleted;
     };
 
-    const storeOrUpdateMissionary = async (data: Partial<Missionary>|Missionary, id?: number|null) => {
-        if(id) {
-            return await updateMissionary(id, data);
+    const storeOrUpdateMissionary = async (data: Partial<Missionary>|Missionary, missionary?: Partial<Missionary>|null) => {
+        if(missionary) {
+            return await updateMissionary(missionary, data);
         }
 
         return await addMissionary(data);

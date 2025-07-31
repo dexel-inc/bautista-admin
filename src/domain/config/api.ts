@@ -1,3 +1,4 @@
+
 export default {
-   url: 'http://bautista-iglesia-api.test',
+   url: import.meta.env.VITE_API_URL,
 }

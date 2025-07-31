@@ -25,8 +25,8 @@ export default function MissionaryDetail() {
 
     return (
         <>
-            <PageMeta title={`IBF - ${missionary?.family}`} description="Missionary detail"/>
-            <PageBreadcrumb pageTitle={missionary?.family} others={
+            <PageMeta title={`IBF - ${missionary?.title}`} description="Missionary detail"/>
+            <PageBreadcrumb pageTitle={missionary?.title} others={
                 <li className="text-sm self-center">
                     <Link
                         className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
@@ -75,7 +75,7 @@ export default function MissionaryDetail() {
             </PageBreadcrumb>
             <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 flex flex-col lg:flex-row gap-6">
                 <div className="w-full">
-                    <img className="h-80 w-full lg:w-auto" src={missionary?.img ?? ''} title={missionary?.family ?? ''} alt={missionary?.family ?? ''}/>
+                    <img className="h-80 w-full lg:w-auto" src={missionary?.image ?? ''} title={missionary?.title ?? ''} alt={missionary?.title ?? ''}/>
                 </div>
                 <div className="w-full">
                     <div className="pb-6 w-full">
@@ -83,7 +83,7 @@ export default function MissionaryDetail() {
                             Descripción
                         </p>
                         <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                            {missionary?.description}
+                            {missionary?.message}
                         </p>
                     </div>
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -103,14 +103,6 @@ export default function MissionaryDetail() {
                                     </p>
                                     <p className="text-sm font-medium text-gray-800 dark:text-white/90">
                                         {missionary?.user?.email}
-                                    </p>
-                                </div>
-                                <div className="w-full">
-                                    <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                                        Ubicación
-                                    </p>
-                                    <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                                        {missionary?.address}
                                     </p>
                                 </div>
                             </div>
