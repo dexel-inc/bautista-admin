@@ -19,8 +19,10 @@ export function useMissionaries() {
     };
 
     const addMissionary = async (data: Partial<Missionary>) => {
+        setLoading(true);
         const newMissionary = await service.store(data);
         if (newMissionary) setMissionaries((prev) => [...prev, newMissionary]);
+        setLoading(false);
         return newMissionary
     };
 
@@ -28,19 +30,22 @@ export function useMissionaries() {
         const updated = await service.update(missionary, data);
         if (updated) {
             setMissionaries((prev) =>
-                prev.map((missionary) => (missionary.id === missionary.id ? updated : missionary))
+                prev.map((missionaryData) => (missionaryData.id === missionary.id ? updated : missionaryData))
             );
         }
         return updated;
     };
 
     const deleteMissionary = async (id: number) => {
+        setLoading(true);
         const deleted = await service.remove(id);
         if (deleted) {
             setMissionaries((prev) =>
                 prev.filter((missionary) => (missionary.id !== id))
             );
         }
+        setLoading(false);
+
         return deleted;
     };
 

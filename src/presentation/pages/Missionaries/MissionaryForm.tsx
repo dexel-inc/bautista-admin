@@ -5,12 +5,10 @@ import DropzoneComponent from "@/presentation/components/form/form-elements/Drop
 import { useEffect, useState } from "react";
 import ComponentCard from "@/presentation/components/common/ComponentCard.tsx";
 import Button from "@/presentation/components/ui/button/Button.tsx";
-import TextArea from "@/presentation/components/form/input/TextArea.tsx";
 import { useMissionaries, useMissionary } from "@/domain/hooks/useMissionary.ts";
 
 interface FormErrors {
     familyName?: string | null;
-    description?: string | null;
     contactName?: string | null;
     contactEmail?: string | null;
     imageFile?: string | null;
@@ -24,7 +22,6 @@ export default function MissionaryForm() {
     const navigate = useNavigate();
 
     const [familyName, setFamilyName] = useState("");
-    const [description, setDescription] = useState("");
     const [contactName, setContactName] = useState("");
     const [contactEmail, setContactEmail] = useState("");
     const [uploadFile, setUploadFile] = useState<File | null>(null);
@@ -33,7 +30,6 @@ export default function MissionaryForm() {
     useEffect(() => {
         if (missionary) {
             setFamilyName(missionary.title ?? "");
-            setDescription(missionary.message ?? "");
             setContactName(missionary.user?.name ?? "");
             setContactEmail(missionary.user?.email ?? "");
         }
@@ -77,18 +73,6 @@ export default function MissionaryForm() {
         setErrors(newErrors);
     };
 
-    const validateDescription = (value: string) => {
-        setDescription(value);
-        const newErrors = { ...errors };
-        delete newErrors.general;
-
-        if (!value.trim()) newErrors.description = "La descripción es requerida";
-        else if (value.length < 10) newErrors.description = "Debe tener al menos 10 caracteres";
-        else delete newErrors.description;
-
-        setErrors(newErrors);
-    };
-
     const validateImage = (file: File | null) => {
         setUploadFile(file);
         const newErrors = { ...errors };
@@ -105,7 +89,6 @@ export default function MissionaryForm() {
         validateFamilyName(familyName);
         validateContactName(contactName);
         validateContactEmail(contactEmail);
-        validateDescription(description);
         validateImage(uploadFile);
         return Object.keys(errors).length === 0;
     };
@@ -115,7 +98,6 @@ export default function MissionaryForm() {
 
         const data = {
             title: familyName.trim(),
-            message: description.trim(),
             user: {
                 name: contactName.trim(),
                 email: contactEmail.trim(),
@@ -155,48 +137,49 @@ export default function MissionaryForm() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <ComponentCard>
                     <div className="space-y-6 px-2 mt-8">
-                        <label className="block text-sm font-medium">Familia <span className="text-error-500">*</span></label>
-                        <input
-                            value={familyName}
-                            onChange={(e) => validateFamilyName(e.target.value)}
-                            className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.familyName ? "border-red-500" : "border-gray-300"}`}
-                        />
-                        {errors.familyName && <p className="text-xs text-red-600">{errors.familyName}</p>}
-
-                        <div className="flex gap-6 mt-6">
-                            <div className="w-full">
-                                <label className="block text-sm font-medium">Nombre de contacto <span className="text-error-500">*</span></label>
-                                <input
-                                    value={contactName}
-                                    onChange={(e) => validateContactName(e.target.value)}
-                                    className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.contactName ? "border-red-500" : "border-gray-300"}`}
-                                />
-                                {errors.contactName && <p className="text-xs text-red-600">{errors.contactName}</p>}
-                            </div>
-
-                            <div className="w-full">
-                                <label className="block text-sm font-medium">Correo electrónico <span className="text-error-500">*</span></label>
-                                <input
-                                    type="email"
-                                    value={contactEmail}
-                                    onChange={(e) => validateContactEmail(e.target.value)}
-                                    className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.contactEmail ? "border-red-500" : "border-gray-300"}`}
-                                />
-                                {errors.contactEmail && <p className="text-xs text-red-600">{errors.contactEmail}</p>}
-                            </div>
+                        <div className="w-full">
+                            <label className="block text-sm font-medium dark:text-white">Título <span className="text-error-500">*</span></label>
+                            <input
+                                value={familyName}
+                                placeholder="Ingrese el nombre de la familia o ministerio"
+                                onChange={(e) => validateFamilyName(e.target.value)}
+                                className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.familyName ? "border-red-500" : "border-gray-300"}`}
+                            />
+                            {errors.familyName && <p className="text-xs text-red-600">{errors.familyName}</p>}
                         </div>
 
-                        <label className="mt-6 block text-sm font-medium">Descripción <span className="text-error-500">*</span></label>
-                        <TextArea value={description} onChange={validateDescription} rows={4} className={errors.description ? "border-red-500" : ""} />
-                        {errors.description && <p className="text-xs text-red-600">{errors.description}</p>}
+                        <div className="w-full">
+                            <label className="block text-sm font-medium dark:text-white">Nombre de contacto <span className="text-error-500">*</span></label>
+                            <input
+                                value={contactName}
+                                placeholder="Ingrese el nombre de la persona encargada"
+                                onChange={(e) => validateContactName(e.target.value)}
+                                className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.contactName ? "border-red-500" : "border-gray-300"}`}
+                            />
+                            {errors.contactName && <p className="text-xs text-red-600">{errors.contactName}</p>}
+                        </div>
+
+                        <div className="w-full">
+                            <label className="block text-sm font-medium dark:text-white">Correo electrónico <span className="text-error-500">*</span></label>
+                            <input
+                                type="email"
+                                value={contactEmail}
+                                placeholder="ministerio@ministerio.com"
+                                onChange={(e) => validateContactEmail(e.target.value)}
+                                className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.contactEmail ? "border-red-500" : "border-gray-300"}`}
+                            />
+                            {errors.contactEmail && <p className="text-xs text-red-600">{errors.contactEmail}</p>}
+                        </div>
                     </div>
                 </ComponentCard>
 
                 {/* Imagen */}
                 <ComponentCard>
-                    <label className="block text-sm font-medium mt-6">Invitación para oración</label>
-                    <DropzoneComponent uploadFile={uploadFile} setUploadFile={(file) => validateImage(file)} />
-                    {errors.imageFile && <p className="text-xs text-red-600">{errors.imageFile}</p>}
+                    <div className="w-full">
+                        <label className="block text-sm font-medium mt-6 dark:text-white">Invitación para oración</label>
+                        <DropzoneComponent uploadFile={uploadFile} setUploadFile={(file) => validateImage(file)} />
+                        {errors.imageFile && <p className="text-xs text-red-600">{errors.imageFile}</p>}
+                    </div>
 
                     <div className="flex justify-end mt-6">
                         <Button variant="primary" onClick={handleAddOrUpdateEvent}>Guardar</Button>

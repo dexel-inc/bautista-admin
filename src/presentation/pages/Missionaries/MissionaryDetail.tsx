@@ -78,14 +78,6 @@ export default function MissionaryDetail() {
                     <img className="h-80 w-full lg:w-auto" src={missionary?.image ?? ''} title={missionary?.title ?? ''} alt={missionary?.title ?? ''}/>
                 </div>
                 <div className="w-full">
-                    <div className="pb-6 w-full">
-                        <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                            Descripción
-                        </p>
-                        <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                            {missionary?.message}
-                        </p>
-                    </div>
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                         <div className="w-full">
                             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 justify-between w-full">

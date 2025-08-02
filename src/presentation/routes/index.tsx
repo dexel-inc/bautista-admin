@@ -7,7 +7,6 @@ import Testimonies from "@/presentation/pages/Testimonies/Testimonies.tsx";
 import TestimonyForm from "@/presentation/pages/Testimonies/TestimonyForm.tsx";
 import Missionaries from "@/presentation/pages/Missionaries/Missionaries.tsx";
 import MissionaryForm from "@/presentation/pages/Missionaries/MissionaryForm.tsx";
-import MissionaryDetail from "@/presentation/pages/Missionaries/MissionaryDetail.tsx";
 import { useAuth } from "@/domain/hooks/useAuth.ts";
 
 export function RenderRoutes() {
@@ -39,10 +38,6 @@ export function RenderRoutes() {
                 <Route
                     path="/missionaries/create"
                     element={activeUser || isLoading ? <MissionaryForm /> : <Navigate to="/signin" replace />}
-                />
-                <Route
-                    path="/missionaries/:missionaryId"
-                    element={activeUser || isLoading ? <MissionaryDetail /> : <Navigate to="/signin" replace />}
                 />
                 <Route
                     path="/missionaries/:missionaryId/edit"

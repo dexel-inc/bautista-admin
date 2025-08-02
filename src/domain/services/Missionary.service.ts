@@ -28,9 +28,8 @@ async function update(missionary: Partial<Missionary>, data: Partial<Missionary>
         formData.append('title', data.title ?? missionary.title ?? '');
         formData.append('contact_name', data.user?.name ?? '');
         formData.append('contact_email', data.user?.email ?? '');
-        formData.append('message', data.message ?? missionary.message ?? '');
-        formData.append('disabled_at', data.status ? data.status !== 'inactive' ? '' : Date.now().toString() : (data.disabled_at ?? ''));
-        
+        formData.append('isEnabled', data.isEnabled ? 'true' : 'false');
+
         const response = await service.post(`/api/missionaries/${missionary.id}/edit`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -50,8 +49,7 @@ async function store(data: Partial<Missionary>) {
         formData.append('title', data.title ?? '');
         formData.append('contact_name', data.user?.name ?? '');
         formData.append('contact_email', data.user?.email ?? '');
-        formData.append('message', data.message ?? '');
-        formData.append('disabled_at', data.status !== 'inactive' ? '' : Date.now().toString());
+        formData.append('isEnabled', data.isEnabled ? 'true' : 'false');
 
         const response = await service.post(`/api/missionaries`, formData, {
             headers: {

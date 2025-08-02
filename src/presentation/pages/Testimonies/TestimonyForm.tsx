@@ -143,7 +143,7 @@ export default function TestimonyForm() {
                     <div className="space-y-6">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
                             <div className="mt-8">
-                                <label className="mb-1.5 block text-sm font-medium">Nombre <span className="text-error-500">*</span></label>
+                                <label className="mb-1.5 block text-sm font-medium dark:text-white">Nombre <span className="text-error-500">*</span></label>
                                 <input
                                     id="name"
                                     type="text"
@@ -155,11 +155,11 @@ export default function TestimonyForm() {
                                 />
                                 {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
 
-                                <label className="mt-6 mb-1.5 block text-sm font-medium">Descripción <span className="text-error-500">*</span></label>
+                                <label className="mt-6 mb-1.5 block text-sm font-medium dark:text-white">Descripción <span className="text-error-500">*</span></label>
                                 <TextArea
                                     value={description}
                                     onChange={validateDescription}
-                                    placeholder="Ingrese la descripción"
+                                    placeholder="Ingrese el testimonio"
                                     rows={4}
                                     className={errors.description ? 'border-red-500' : ''}
                                 />
@@ -171,7 +171,7 @@ export default function TestimonyForm() {
 
                 <ComponentCard>
                     <div className="mt-6">
-                        <label className="mb-1.5 block text-sm font-medium">Imagen del testimonio</label>
+                        <label className="mb-1.5 block text-sm font-medium dark:text-white">Imagen del testimonio</label>
                         <DropzoneComponent uploadFile={uploadFile} setUploadFile={(file) => validateImage(file)} />
                         {errors.imageFile && <p className="mt-1 text-xs text-red-600">{errors.imageFile}</p>}
                     </div>
