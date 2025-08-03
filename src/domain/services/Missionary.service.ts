@@ -20,46 +20,38 @@ async function index() {
 }
 
 async function update(missionary: Partial<Missionary>, data: Partial<Missionary>) {
-    try {
-        const formData = new FormData();
-        if(data.imageFile) {
-            formData.append('image', data.imageFile);
-        }
-        formData.append('title', data.title ?? missionary.title ?? '');
-        formData.append('contact_name', data.user?.name ?? '');
-        formData.append('contact_email', data.user?.email ?? '');
-        formData.append('isEnabled', data.isEnabled ? 'true' : 'false');
-
-        const response = await service.post(`/api/missionaries/${missionary.id}/edit`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-
-        return response.data.status.status === 'OK' ? response.data.data : null;
-    } catch (error) {
-        return {};
+    const formData = new FormData();
+    if(data.imageFile) {
+        formData.append('image', data.imageFile);
     }
+    formData.append('title', data.title ?? missionary.title ?? '');
+    formData.append('contact_name', data.user?.name ?? '');
+    formData.append('contact_email', data.user?.email ?? '');
+    formData.append('isEnabled', data.isEnabled ? 'true' : 'false');
+
+    const response = await service.post(`/api/missionaries/${missionary.id}/edit`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+
+    return response.data.status.status === 'OK' ? response.data.data : null;
 }
 
 async function store(data: Partial<Missionary>) {
-    try {
-        const formData = new FormData();
-        formData.append('image', data.imageFile ?? '');
-        formData.append('title', data.title ?? '');
-        formData.append('contact_name', data.user?.name ?? '');
-        formData.append('contact_email', data.user?.email ?? '');
-        formData.append('isEnabled', data.isEnabled ? 'true' : 'false');
+    const formData = new FormData();
+    formData.append('image', data.imageFile ?? '');
+    formData.append('title', data.title ?? '');
+    formData.append('contact_name', data.user?.name ?? '');
+    formData.append('contact_email', data.user?.email ?? '');
+    formData.append('isEnabled', data.isEnabled ? 'true' : 'false');
 
-        const response = await service.post(`/api/missionaries`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        return response.data.status.status === 'OK' ? response.data.data : null;
-    } catch (error) {
-        return {};
-    }
+    const response = await service.post(`/api/missionaries`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+    return response.data.status.status === 'OK' ? response.data.data : null;
 }
 
 async function remove(missionary: number) {

@@ -107,8 +107,8 @@ export default function MissionaryForm() {
         };
 
         try {
-            const missionaryModified = await storeOrUpdateMissionary(data, missionary);
-            navigate(`/missionaries/${missionaryModified.id}`);
+            await storeOrUpdateMissionary(data, missionary);
+            navigate(`/missionaries`);
         } catch (error) {
             setErrors({ general: "Ocurrió un error al guardar el misionero" });
         }
@@ -136,7 +136,7 @@ export default function MissionaryForm() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <ComponentCard>
-                    <div className="space-y-6 px-2 mt-8">
+                    <div className="space-y-6 px-2 mt-8 dark:text-white text-gray-800">
                         <div className="w-full">
                             <label className="block text-sm font-medium dark:text-white">Título <span className="text-error-500">*</span></label>
                             <input
@@ -182,7 +182,7 @@ export default function MissionaryForm() {
                     </div>
 
                     <div className="flex justify-end mt-6">
-                        <Button variant="primary" onClick={handleAddOrUpdateEvent}>Guardar</Button>
+                        <Button disabled={!!Object.values(errors).length} variant="primary" onClick={handleAddOrUpdateEvent}>Guardar</Button>
                     </div>
                 </ComponentCard>
             </div>

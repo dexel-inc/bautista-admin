@@ -146,7 +146,7 @@ export default function EmailCommunicationModal({ isOpen, onClose, config }: Ema
                 </div>
             )}
 
-            <div className="space-y-6">
+            <div className="space-y-6 dark:text-white text-gray-800">
                 {/* Subject Field */}
                 <div>
                     <label className="block text-sm font-medium dark:text-white mb-2">
@@ -218,7 +218,7 @@ export default function EmailCommunicationModal({ isOpen, onClose, config }: Ema
             </div>
 
             <div className="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="outline" onClick={handleClose}>
                     Cancelar
                 </Button>
                 <Button 
@@ -291,7 +291,7 @@ export default function EmailCommunicationModal({ isOpen, onClose, config }: Ema
                             </p>
                         </div>
                         <div className="flex items-center justify-center gap-3">
-                            <Button variant="secondary" onClick={handleClose}>
+                            <Button variant="outline" onClick={handleClose}>
                                 Cancelar
                             </Button>
                             <Button variant="primary" onClick={handleRetry}>

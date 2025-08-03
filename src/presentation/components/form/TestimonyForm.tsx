@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ComponentCard from "@/presentation/components/common/ComponentCard.tsx";
 import Button from "@/presentation/components/ui/button/Button.tsx";
 import TextArea from "@/presentation/components/form/input/TextArea.tsx";
 import {Modal} from "@/presentation/components/ui/modal";
@@ -33,6 +32,11 @@ export default function TestimonyForm({isOpen, closeModal, testimony}: Testimony
             setDescription(testimony.content ?? '');
         }
     }, [testimony]);
+
+    useEffect(() => {
+        setName(testimony?.name ?? '');
+        setDescription(testimony?.content ?? '');
+    }, [isOpen]);
 
     const validateName = (value: string) => {
         setName(value);
@@ -90,9 +94,8 @@ export default function TestimonyForm({isOpen, closeModal, testimony}: Testimony
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={closeModal} className="max-w-md m-4">
-            <ComponentCard>
-                <div className="space-y-6">
+        <Modal isOpen={isOpen} onClose={closeModal} className="max-w-md m-4 p-4 bg-white dark:bg-gray-900 dark:text-white">
+            <div className="space-y-6">
                     {errors.general && (
                         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
                             <p className="text-sm text-red-600">{errors.general}</p>
@@ -135,7 +138,6 @@ export default function TestimonyForm({isOpen, closeModal, testimony}: Testimony
                         </Button>
                     </div>
                 </div>
-            </ComponentCard>
         </Modal>
     );
 }

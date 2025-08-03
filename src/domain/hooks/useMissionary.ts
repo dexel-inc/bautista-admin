@@ -20,20 +20,34 @@ export function useMissionaries() {
 
     const addMissionary = async (data: Partial<Missionary>) => {
         setLoading(true);
-        const newMissionary = await service.store(data);
-        if (newMissionary) setMissionaries((prev) => [...prev, newMissionary]);
-        setLoading(false);
-        return newMissionary
+        try {
+            const newMissionary = await service.store(data);
+            if (newMissionary) setMissionaries((prev) => [...prev, newMissionary]);
+            setLoading(false);
+            return newMissionary
+        } catch (error) {throw new Error("No se pudo crear. Por favor, inténtalo de nuevo.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const updateMissionary = async (missionary: Partial<Missionary>, data: Partial<Missionary>) => {
-        const updated = await service.update(missionary, data);
-        if (updated) {
-            setMissionaries((prev) =>
-                prev.map((missionaryData) => (missionaryData.id === missionary.id ? updated : missionaryData))
-            );
+        setLoading(true);
+        try {
+            const updated = await service.update(missionary, data);
+            if (updated) {
+                setMissionaries((prev) =>
+                    prev.map((missionaryData) => (missionaryData.id === missionary.id ? updated : missionaryData))
+                );
+            }
+            setLoading(false);
+
+            return updated;
+        } catch (error) {throw new Error("No se pudo actualizar. Por favor, inténtalo de nuevo.");
+        } finally {
+            setLoading(false);
         }
-        return updated;
+
     };
 
     const deleteMissionary = async (id: number) => {
