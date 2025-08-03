@@ -25,13 +25,24 @@ export function useTestimonies() {
     };
 
     const updateTestimony = async (testimony: Partial<Testimony>, data: Partial<Testimony>) => {
-        const updated = await service.update(testimony, data);
-        if (updated) {
-            setTestimonies((prev) =>
-                prev.map((testimonyN) => (testimonyN.id === testimonyN.id ? updated : testimony))
-            );
+        setLoading(true);
+        try {
+            const updated = await service.update(testimony, data);
+            if (updated?.id) {
+                setTestimonies(prev =>
+                    prev.map((testimonyData) => testimonyData.id === updated.id
+                        ? updated
+                        : testimonyData
+                    )
+                );
+            }
+            return updated;
+        } catch (error) {
+            console.error("Error al actualizar el testimonio:", error);
+            throw new Error("No se pudo actualizar el testimonio. Por favor, inténtalo de nuevo.");
+        } finally {
+            setLoading(false);
         }
-        return updated;
     };
 
     const deleteTestimony = async (id: number) => {
@@ -62,30 +73,5 @@ export function useTestimonies() {
         addTestimony,
         updateTestimony,
         storeOrUpdateTestimony
-    };
-}
-
-
-export function useTestimony(testimonyId?: number) {
-    const [testimony, setTestimony] = useState<null|Testimony>(null);
-    const [loading, setLoading] = useState(true);
-
-
-    const fetchTestimony = async () => {
-
-        if(testimonyId) {
-            setLoading(true);
-            const data = await service.show(testimonyId);
-            setTestimony(data);
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => { fetchTestimony(); }, []);
-
-    return {
-        loading,
-        testimony,
-        fetchTestimony,
     };
 }

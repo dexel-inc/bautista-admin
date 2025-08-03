@@ -4,16 +4,15 @@ import {Dropdown} from "@/presentation/components/ui/dropdown/Dropdown.tsx";
 import {DropdownItem} from "@/presentation/components/ui/dropdown/DropdownItem.tsx";
 import {Testimony} from "@/domain/models/Testimony.ts";
 import {useDropdown} from "@/domain/hooks/useDropdown.ts";
-import {Link} from "react-router";
 import {useState} from "react";
 
 interface TestimonyProps {
   testimony: Testimony;
   openModal: (testimony: Testimony) => void
+  openModalForm: (testimony: Testimony|null) => void
 }
 
-
-export default function TestimonyCard({testimony, openModal}: TestimonyProps) {
+export default function TestimonyCard({testimony, openModal, openModalForm}: TestimonyProps) {
   const { isOpenDropdown, toggleDropdown, closeDropdown } = useDropdown();
   const [expanded, setExpanded] = useState(false);
 
@@ -24,9 +23,7 @@ export default function TestimonyCard({testimony, openModal}: TestimonyProps) {
       <div className="group relative mt-2">
           <ComponentCard className="relative group-hover:backdrop-blur-xl h-full">
             <div className="absolute shadow-md -top-5 m-auto left-0 text-gray-800 bg-gray-200 right-0 justify-center h-20 w-20 flex overflow-hidden rounded-full items-center self-center">
-              {
-                testimony.image ? <img alt="card" className="overflow-hidden rounded-lg" src={testimony.image}/> : <NotFoundProfile height={50} width={50} />
-              }
+              <NotFoundProfile height={50} width={50} />
             </div>
             <div className="gap-4 justify-between text-center">
               <div className="relative flex justify-end">
@@ -39,12 +36,11 @@ export default function TestimonyCard({testimony, openModal}: TestimonyProps) {
                     className="w-40 p-2"
                 >
                   <DropdownItem
+                      onItemClick={() => {openModalForm(testimony); closeDropdown()}}
                       className="flex w-full gap-4 items-center font-normal text-left text-gray-500 hover:text-gray-500 hover:bg-gray-500/10 rounded-lg"
                   >
-                    <Link to={`/testimonies/${testimony?.id}/edit`} className='flex gap-4 w-full items-center'>
                       <PencilIcon />
                       Editar
-                    </Link>
                   </DropdownItem>
                   <DropdownItem
                       onItemClick={() => {openModal(testimony); closeDropdown()}}
@@ -67,7 +63,8 @@ export default function TestimonyCard({testimony, openModal}: TestimonyProps) {
                         {expanded ? "ver menos" : "ver más"}
                       </button>
                   )}
-                </p>              </div>
+                </p>
+              </div>
             </div>
           </ComponentCard>
         </div>
