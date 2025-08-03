@@ -3,7 +3,7 @@ import subscriptionsData from "@/domain/mocks/subscriptions.ts";
 
 const STORAGE_KEY = "mock_subscriptions";
 
-function getStoredSubscriptions(): Partial<Subscription>[] {
+function getStoredSubscriptions(): Subscription[] {
     let data = localStorage.getItem(STORAGE_KEY);
 
     if(!data) {
@@ -15,22 +15,22 @@ function getStoredSubscriptions(): Partial<Subscription>[] {
     return data ? JSON.parse(data) : [];
 }
 
-function saveSubscriptions(subscriptions: Partial<Subscription>[]) {
+function saveSubscriptions(subscriptions: Subscription[]) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(subscriptions));
 }
 
-async function index(): Promise<Partial<Subscription>[]> {
+async function index(): Promise<Subscription[]> {
     return getStoredSubscriptions();
 }
 
-async function show(id: number): Promise<Partial<Subscription> | undefined> {
+async function show(id: number): Promise<Subscription | undefined> {
     const subscriptions = getStoredSubscriptions();
     return subscriptions.find((s) => s.id === id);
 }
 
-async function store(data: Partial<Subscription>): Promise<Partial<Subscription>> {
+async function store(data: Subscription): Promise<Subscription> {
     const subscriptions = getStoredSubscriptions();
-    const newSubscription: Partial<Subscription> = {
+    const newSubscription: Subscription = {
         ...data,
         id: subscriptions.length + 1,
     };
@@ -39,7 +39,7 @@ async function store(data: Partial<Subscription>): Promise<Partial<Subscription>
     return newSubscription;
 }
 
-async function update(subscription: Partial<Subscription>, data: Partial<Subscription>): Promise<Partial<Subscription> | null> {
+async function update(subscription: Partial<Subscription>, data: Partial<Subscription>): Promise<Subscription | null> {
     const subscriptions = getStoredSubscriptions();
     const index = subscriptions.findIndex((s) => s.id === subscription.id);
 
