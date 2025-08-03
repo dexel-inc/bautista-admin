@@ -35,6 +35,10 @@ export function RenderRoutes() {
                     path="/missionaries/:missionaryId/edit"
                     element={activeUser || isLoading ? <MissionaryForm /> : <Navigate to="/signin" replace />}
                 />
+                <Route
+                    path="/subscriptions"
+                    element={activeUser || isLoading ? <Missionaries /> : <Navigate to="/subscriptions" replace />}
+                />
             </Route>
 
             <Route
