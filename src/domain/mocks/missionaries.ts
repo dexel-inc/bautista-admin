@@ -8,7 +8,7 @@ const missionaries: Missionary[] = [
             name: "Bobby Goins",
             email: "bobby@gmail.com",
         },
-        image: "https://bautista-iglesia.vercel.app/assets/image-20250530-WA0056-CSCPfhX6.jpg"
+        image: "https://bautista-iglesia.vercel.app/assets/IMG-20250610-WA0026-CbTMIT6o.webp"
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ const missionaries: Missionary[] = [
             name: "Kaiya George",
             email: "Kaiya@gmail.com",
         },
-        image: "https://bautista-iglesia.vercel.app/assets/image-20250530-WA0056-CSCPfhX6.jpg"
+        image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=256&h=256&facepad=2"
     },
     {
         id: 3,
@@ -26,7 +26,7 @@ const missionaries: Missionary[] = [
             name: "Zain Geidt",
             email: "Geidt@gmail.com",
         },
-        image: "https://bautista-iglesia.vercel.app/assets/image-20250530-WA0056-CSCPfhX6.jpg"
+        image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=256&h=256&facepad=2"
     },
     {
         id: 4,
@@ -35,7 +35,7 @@ const missionaries: Missionary[] = [
             name: "Abram Schleifer",
             email: "Abram@gmail.com",
         },
-        image: "https://bautista-iglesia.vercel.app/assets/image-20250530-WA0056-CSCPfhX6.jpg",
+        image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=256&h=256&facepad=2",
     },
     {
         id: 5,
@@ -44,7 +44,7 @@ const missionaries: Missionary[] = [
             name: "Carla George",
             email: "Carla@gmail.com",
         },
-        image: "https://bautista-iglesia.vercel.app/assets/image-20250530-WA0056-CSCPfhX6.jpg",
+        image: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=256&h=256&facepad=2",
     },
 ];
 

@@ -309,11 +309,13 @@ export default function EmailCommunicationModal({ isOpen, onClose, config }: Ema
         <Modal 
             isOpen={isOpen} 
             onClose={handleClose} 
-            className="max-w-2xl m-4"
+            className="max-w-2xl mx-4 my-4 max-h-[90vh] overflow-hidden"
             showCloseButton={modalState !== 'loading'}
         >
-            <div className="px-6 py-4 no-scrollbar relative w-full max-w-2xl overflow-y-auto rounded-3xl bg-white dark:bg-gray-900">
-                {getModalContent()}
+            <div className="relative w-full h-full max-h-[90vh] overflow-y-auto rounded-3xl bg-white dark:bg-gray-900">
+                <div className="px-6 py-4">
+                    {getModalContent()}
+                </div>
             </div>
         </Modal>
     );
