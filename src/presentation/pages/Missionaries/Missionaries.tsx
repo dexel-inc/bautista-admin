@@ -3,8 +3,12 @@ import MissionariesTable from "@/presentation/components/tables/MissionariesTabl
 import {PlusIcon} from "../../icons";
 import PageBreadcrumb from "@/presentation/components/common/PageBreadCrumb.tsx";
 import {Link} from "react-router";
+import {useModal} from "@/domain/hooks/useModal.ts";
+import PrayLetterModal from "@/presentation/components/modals/PrayLetterModal";
 
 export default function Missionaries() {
+    const { isOpen, openModal, closeModal } = useModal();
+
     return (
     <>
       <PageMeta
@@ -20,7 +24,10 @@ export default function Missionaries() {
                     <PlusIcon />
                     Nuevo
                 </Link>
-                <button className="flex w-full items-center justify-center gap-2 rounded-full border border-brand-500 bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-brand-600 lg:inline-flex lg:w-auto">
+                <button 
+                    onClick={openModal}
+                    className="flex w-full items-center justify-center gap-2 rounded-full border border-brand-500 bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-brand-600 lg:inline-flex lg:w-auto"
+                >
                     Enviar PrayLetter
                 </button>
             </div>
@@ -28,6 +35,8 @@ export default function Missionaries() {
         <div className="space-y-6">
           <MissionariesTable />
         </div>
+
+        <PrayLetterModal isOpen={isOpen} onClose={closeModal} />
     </>
   );
 }

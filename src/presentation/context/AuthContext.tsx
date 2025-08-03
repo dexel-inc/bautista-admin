@@ -1,10 +1,15 @@
 import {useEffect, useState} from "react";
 import {User} from "@/domain/models/User.ts";
+import authServiceMock from "@/domain/services/Auth.service.mock";
 import authService from "@/domain/services/Auth.service.ts";
 import {getUser, setUser} from "@/domain/storage/user.ts";
 
 import { createContext } from 'react';
 import {AuthUser} from "@/domain/models/AuthUser.ts";
+import config from "@/domain/config";
+
+
+const service = config.onTest ? authServiceMock : authService;
 
 export interface AuthContextType {
     login: (data: Partial<User>) => Promise<{ user: User | null; success: boolean; error?: any }>;
@@ -23,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
         setIsLoading(true);
 
         try {
-            const authUser = await authService.login(data);
+            const authUser = await service.login(data);
             if (authUser.user) {
                 setActiveUser(authUser);
                 setUser(authUser);
@@ -40,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
     const logout = async () => {
         setIsLoading(true);
         try {
-            await authService.logout();
+            await service.logout();
             setUser(null);
             setActiveUser(null);
             setIsLoading(false);
