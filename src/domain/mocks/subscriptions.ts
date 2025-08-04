@@ -20,6 +20,7 @@ const subscriptions: Subscription[] = [
     {
         id: 5,
         email: "Carla@gmail.com",
+        disabledAt: new Date("2023-10-01T00:00:00Z"),
     },
 ];
 
