@@ -20,9 +20,6 @@ export default function Subscriptions() {
                     <PlusIcon />
                     Nuevo
                 </Link>
-                <button className="flex w-full items-center justify-center gap-2 rounded-full border border-brand-500 bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-brand-600 lg:inline-flex lg:w-auto">
-                    Enviar notificación
-                </button>
             </div>
         </PageBreadcrumb>
         <div className="space-y-6">
