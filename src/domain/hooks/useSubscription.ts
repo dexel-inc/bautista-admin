@@ -1,0 +1,51 @@
+import { useEffect, useState } from 'react';
+import subscriptionService from '@/domain/services/Subscription.service.ts';
+import subscriptionServiceMock from '@/domain/services/Subscription.service.mock.ts';
+import { Subscription } from '@/domain/models/Subscription.ts';
+import config from "@/domain/config";
+
+const service = config.onTest ? subscriptionServiceMock : subscriptionService;
+
+export function useSubscriptions() {
+    const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+    const [loading, setLoading] = useState(true);
+
+
+    const fetchSubscriptions = async () => {
+        setLoading(true);
+        const data = await service.index();
+        setSubscriptions(data);
+        setLoading(false);
+    };
+
+    const storeSubscription = async (data: Partial<Subscription>) => {
+        setLoading(true);
+        const newSubscription = await service.store(data);
+        if (newSubscription) setSubscriptions((prev) => [...prev, newSubscription]);
+        setLoading(false);
+        return newSubscription
+    };
+
+    const deleteSubscription = async (id: number) => {
+        setLoading(true);
+        const deleted = await service.remove(id);
+        if (deleted) {
+            setSubscriptions((prev) =>
+                prev.filter((subscription) => (subscription.id !== id))
+            );
+        }
+        setLoading(false);
+
+        return deleted;
+    };
+
+    useEffect(() => { fetchSubscriptions(); }, []);
+
+    return {
+        subscriptions,
+        loading,
+        deleteSubscription,
+        fetchSubscriptions,
+        storeSubscription
+    };
+}
