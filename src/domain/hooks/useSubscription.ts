@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import subscriptionService from '@/domain/services/Subscription.service.ts';
 import subscriptionServiceMock from '@/domain/services/Subscription.service.mock.ts';
 import { Subscription } from '@/domain/models/Subscription.ts';
-import config from "@/domain/config";
 
-const service = config.onTest ? subscriptionServiceMock : subscriptionService;
+const service = subscriptionServiceMock;
 
 export function useSubscriptions() {
     const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
