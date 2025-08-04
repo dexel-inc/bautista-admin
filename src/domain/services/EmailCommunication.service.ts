@@ -25,6 +25,7 @@ class EmailCommunicationService {
     ): Promise<EmailCommunicationResult> {
         try {
             // Simulate API call
+            console.log(`Enviando ${type} a ${data.recipients} con asunto: ${data.subject}`);
             await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if (Math.random() > 0.2) { // 80% success rate

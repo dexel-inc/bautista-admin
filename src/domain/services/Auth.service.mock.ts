@@ -1,4 +1,5 @@
 async function login(data: Object) {
+    console.log('Mock login called with data:', data);
     return {
         user: {
             id: 1,
