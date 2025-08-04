@@ -26,6 +26,16 @@ export function useSubscriptions() {
         return newSubscription
     };
 
+    const updateSubscription = async (subscription: Partial<Subscription>, data: Partial<Subscription>) => {
+        const updated = await service.update(subscription, data);
+        if (updated) {
+            setSubscriptions((prev) =>
+                prev.map((subscriptionData) => (subscriptionData.id === subscription.id ? updated : subscriptionData))
+            );
+        }
+        return updated;
+    };
+
     const deleteSubscription = async (id: number) => {
         setLoading(true);
         const deleted = await service.remove(id);
@@ -46,6 +56,7 @@ export function useSubscriptions() {
         loading,
         deleteSubscription,
         fetchSubscriptions,
-        storeSubscription
+        storeSubscription,
+        updateSubscription,
     };
 }

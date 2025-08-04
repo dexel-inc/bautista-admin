@@ -34,6 +34,20 @@ async function store(data: Partial<Subscription>): Promise<Partial<Subscription>
     return newSubscription;
 }
 
+async function update(subscription: Partial<Subscription>, data: Partial<Subscription>): Promise<Partial<Subscription> | null> {
+    const subscriptions = getStoredSubscriptions();
+    const index = subscriptions.findIndex((s) => s.id === subscription.id);
+
+    if (index === -1) return null;
+
+    const updated = { ...subscriptions[index], ...data };
+    subscriptions[index] = updated;
+    saveSubscriptions(subscriptions);
+
+    return updated;
+}
+
+
 async function remove(id: number): Promise<boolean> {
     const subscriptions = getStoredSubscriptions();
     const index = subscriptions.findIndex((m) => m.id === id);
@@ -48,5 +62,6 @@ async function remove(id: number): Promise<boolean> {
 export default {
     index,
     store,
+    update,
     remove,
 };
