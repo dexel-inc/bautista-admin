@@ -23,11 +23,6 @@ async function index(): Promise<Partial<Subscription>[]> {
     return getStoredSubscriptions();
 }
 
-async function show(id: number): Promise<Partial<Subscription> | undefined> {
-    const subscriptions = getStoredSubscriptions();
-    return subscriptions.find((s) => s.id === id);
-}
-
 async function store(data: Partial<Subscription>): Promise<Partial<Subscription>> {
     const subscriptions = getStoredSubscriptions();
     const newSubscription: Partial<Subscription> = {
@@ -37,19 +32,6 @@ async function store(data: Partial<Subscription>): Promise<Partial<Subscription>
     subscriptions.push(newSubscription);
     saveSubscriptions(subscriptions);
     return newSubscription;
-}
-
-async function update(subscription: Partial<Subscription>, data: Partial<Subscription>): Promise<Partial<Subscription> | null> {
-    const subscriptions = getStoredSubscriptions();
-    const index = subscriptions.findIndex((s) => s.id === subscription.id);
-
-    if (index === -1) return null;
-
-    const updated = { ...subscriptions[index], ...data };
-    subscriptions[index] = updated;
-    saveSubscriptions(subscriptions);
-
-    return updated;
 }
 
 async function remove(id: number): Promise<boolean> {
@@ -65,8 +47,6 @@ async function remove(id: number): Promise<boolean> {
 
 export default {
     index,
-    show,
     store,
-    update,
     remove,
 };
