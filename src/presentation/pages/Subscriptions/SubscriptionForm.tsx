@@ -12,7 +12,7 @@ interface FormErrors {
 }
 
 export default function SubscriptionForm() {
-    const { storeSubscription } = useSubscriptions();
+    const { storeOrUpdateSubscription } = useSubscriptions();
     const navigate = useNavigate();
 
     const [contactEmail, setContactEmail] = useState("");
@@ -44,7 +44,7 @@ export default function SubscriptionForm() {
         };
 
         try {
-            await storeSubscription(data);
+            await storeOrUpdateSubscription(data);
             navigate(`/subscriptions`);
         } catch (error) {
             setErrors({ general: "Ocurrió un error al guardar el misionero" });

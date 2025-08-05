@@ -47,7 +47,6 @@ async function update(subscription: Partial<Subscription>, data: Partial<Subscri
     return updated;
 }
 
-
 async function remove(id: number): Promise<boolean> {
     const subscriptions = getStoredSubscriptions();
     const index = subscriptions.findIndex((m) => m.id === id);
