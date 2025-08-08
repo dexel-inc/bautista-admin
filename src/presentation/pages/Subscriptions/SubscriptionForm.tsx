@@ -7,7 +7,7 @@ import Button from "@/presentation/components/ui/button/Button.tsx";
 import { useSubscriptions } from "@/domain/hooks/useSubscription.ts";
 
 interface FormErrors {
-    contactEmail?: string | null;
+    email?: string | null;
     general?: string | null;
 }
 
@@ -15,7 +15,7 @@ export default function SubscriptionForm() {
     const { storeOrUpdateSubscription } = useSubscriptions();
     const navigate = useNavigate();
 
-    const [contactEmail, setContactEmail] = useState("");
+    const [email, setContactEmail] = useState("");
     const [errors, setErrors] = useState<FormErrors>({});
 
     const validateContactEmail = (value: string) => {
@@ -24,15 +24,15 @@ export default function SubscriptionForm() {
         delete newErrors.general;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!value.trim()) newErrors.contactEmail = "El correo electrónico es requerido";
-        else if (!emailRegex.test(value)) newErrors.contactEmail = "Formato de correo inválido";
-        else delete newErrors.contactEmail;
+        if (!value.trim()) newErrors.email = "El correo electrónico es requerido";
+        else if (!emailRegex.test(value)) newErrors.email = "Formato de correo inválido";
+        else delete newErrors.email;
 
         setErrors(newErrors);
     };
 
     const formIsValid = (): boolean => {
-        validateContactEmail(contactEmail);
+        validateContactEmail(email);
         return Object.keys(errors).length === 0;
     };
 
@@ -40,14 +40,14 @@ export default function SubscriptionForm() {
         if (!formIsValid()) return;
 
         const data = {
-            email: contactEmail.trim(),
+            email: email.trim(),
         };
 
         try {
             await storeOrUpdateSubscription(data);
             navigate(`/subscriptions`);
         } catch (error) {
-            setErrors({ general: "Ocurrió un error al guardar el misionero" });
+            setErrors({ general: "Ocurrió un error al guardar la suscripción" });
         }
     };
 
@@ -77,12 +77,12 @@ export default function SubscriptionForm() {
                             <label className="block text-sm font-medium dark:text-white">Correo electrónico <span className="text-error-500">*</span></label>
                             <input
                                 type="email"
-                                value={contactEmail}
+                                value={email}
                                 placeholder="ministerio@ministerio.com"
                                 onChange={(e) => validateContactEmail(e.target.value)}
-                                className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.contactEmail ? "border-red-500" : "border-gray-300"}`}
+                                className={`h-11 w-full rounded-lg border px-4 py-2.5 text-sm ${errors.email ? "border-red-500" : "border-gray-300"}`}
                             />
-                            {errors.contactEmail && <p className="text-xs text-red-600">{errors.contactEmail}</p>}
+                            {errors.email && <p className="text-xs text-red-600">{errors.email}</p>}
                         </div>
                     </div>
 
