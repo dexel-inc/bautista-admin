@@ -12,7 +12,6 @@ const prayLetterConfig: CommunicationConfig = {
     description: 'Envía una carta de oración a todos los miembros de la iglesia',
     fileLabel: 'PrayLetter',
     subjectPrefix: 'IBF Prayletter',
-    recipients: 'missionaries'
 };
 
 export default function PrayLetterModal({ isOpen, onClose }: PrayLetterModalProps) {

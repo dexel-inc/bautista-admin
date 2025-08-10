@@ -3,8 +3,12 @@ import SubscriptionsTable from "@/presentation/components/tables/SubscriptionsTa
 import {PlusIcon} from "../../icons";
 import PageBreadcrumb from "@/presentation/components/common/PageBreadCrumb.tsx";
 import {Link} from "react-router";
+import {useModal} from "@/domain/hooks/useModal.ts";
+import NewsletterModal from "@/presentation/components/modals/NewsletterModal.tsx";
 
 export default function Subscriptions() {
+    const { isOpen, openModal, closeModal } = useModal();
+
     return (
     <>
       <PageMeta
@@ -20,11 +24,19 @@ export default function Subscriptions() {
                     <PlusIcon />
                     Nuevo
                 </Link>
+                <button
+                onClick={openModal}
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-brand-500 bg-brand-500 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-brand-600 lg:inline-flex lg:w-auto"
+            >
+                Enviar Carta
+            </button>
             </div>
         </PageBreadcrumb>
         <div className="space-y-6">
           <SubscriptionsTable />
         </div>
+
+        <NewsletterModal isOpen={isOpen} onClose={closeModal} />
     </>
   );
 }

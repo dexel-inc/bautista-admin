@@ -95,7 +95,6 @@ export default function EmailCommunicationModal({ isOpen, onClose, config }: Ema
             subject: subject.trim(),
             message: message.trim(),
             attachmentFile: attachmentFile!,
-            recipients: config.recipients
         });
 
         if (!result.success && result.message) {

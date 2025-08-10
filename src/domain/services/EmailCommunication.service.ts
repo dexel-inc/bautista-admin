@@ -1,13 +1,19 @@
+import service from "@/domain/services/service.ts";
+
 export interface EmailCommunicationData {
     subject: string;
     message?: string;
     attachmentFile: File;
-    recipients: 'missionaries' | 'members';
 }
 
 export interface EmailCommunicationResult {
     success: boolean;
     message?: string;
+}
+
+const endpoints = {
+    prayletter: '/api/pray-letters/send ',
+    newsletter: '/api/newsletters/send '
 }
 
 class EmailCommunicationService {
@@ -24,21 +30,27 @@ class EmailCommunicationService {
         type: 'prayletter' | 'newsletter'
     ): Promise<EmailCommunicationResult> {
         try {
-            // Simulate API call
-            console.log(`Enviando ${type} a ${data.recipients} con asunto: ${data.subject}`);
-            await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    if (Math.random() > 0.2) { // 80% success rate
-                        resolve(true);
-                    } else {
-                        reject(new Error(`Error enviando ${type}`));
-                    }
-                }, 5000);
+            const formData = new FormData();
+            formData.append('subject', data.subject ?? '');
+            formData.append('description', data.message ?? '');
+            formData.append('file', data.attachmentFile ?? null);
+
+            const serviceResponse = await service.post(endpoints[type], formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
 
-            return { success: true };
+            const response: EmailCommunicationResult = { success: serviceResponse.data.status.status === 'OK' };
+
+            console.log(serviceResponse)
+            if (!response.success) {
+                response.message = 'Ha ocurrido un error inesperado. Por favor intenta de nuevo.'
+            }
+
+            return response;
         } catch (error) {
-            return { 
+            return {
                 success: false, 
                 message: error instanceof Error ? error.message : 'Error desconocido'
             };
