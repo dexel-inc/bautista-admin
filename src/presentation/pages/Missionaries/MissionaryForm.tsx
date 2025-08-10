@@ -53,8 +53,7 @@ export default function MissionaryForm() {
         const newErrors = { ...errors };
         delete newErrors.general;
 
-        if (!value.trim()) newErrors.contactName = "El nombre de contacto es requerido";
-        else if (value.length < 3) newErrors.contactName = "Debe tener al menos 3 caracteres";
+        if (value && value.length < 3) newErrors.contactName = "Debe tener al menos 3 caracteres";
         else delete newErrors.contactName;
 
         setErrors(newErrors);
@@ -90,7 +89,20 @@ export default function MissionaryForm() {
         validateContactName(contactName);
         validateContactEmail(contactEmail);
         validateImage(uploadFile);
-        return Object.keys(errors).length === 0;
+        
+        return !errors.familyName && !errors.contactEmail && !errors.imageFile;
+    };
+
+    const isButtonEnabled = (): boolean => {
+        const isContactNameValid = contactName.trim() === "" || contactName.trim().length >= 3;
+        
+        return (
+            familyName.trim().length >= 3 && 
+            contactEmail.trim().length > 0 && 
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail) && 
+            (!!uploadFile || !!missionary) &&
+            isContactNameValid
+        );
     };
 
     const handleAddOrUpdateEvent = async () => {
@@ -149,7 +161,7 @@ export default function MissionaryForm() {
                         </div>
 
                         <div className="w-full">
-                            <label className="block text-sm font-medium dark:text-white">Nombre de contacto <span className="text-error-500">*</span></label>
+                            <label className="block text-sm font-medium dark:text-white">Nombre de contacto <span className="text-error-500"></span></label>
                             <input
                                 value={contactName}
                                 placeholder="Ingrese el nombre de la persona encargada"
@@ -182,7 +194,13 @@ export default function MissionaryForm() {
                     </div>
 
                     <div className="flex justify-end mt-6">
-                        <Button disabled={!!Object.values(errors).length} variant="primary" onClick={handleAddOrUpdateEvent}>Guardar</Button>
+                        <Button
+                            disabled={!isButtonEnabled()}
+                            variant="primary"
+                            onClick={handleAddOrUpdateEvent}
+                        >
+                            Guardar
+                        </Button>
                     </div>
                 </ComponentCard>
             </div>
