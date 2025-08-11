@@ -6,6 +6,7 @@ import {
   GridIcon,
   HorizontaLDots, ListIcon,
   UserIcon,
+  GroupIcon
 } from "../icons";
 import { useSidebar } from "@/presentation/context/SidebarContext.tsx";
 
@@ -34,7 +35,7 @@ const navItems: NavItem[] = [
   },
   {
     name: "Suscripciones",
-    icon: <ListIcon />,
+    icon: <GroupIcon />,
     path: "/subscriptions",
   }
 ];
