@@ -36,10 +36,28 @@ export default function SubscriptionsTable() {
     return (
         <>
             {subscriptions.length ? (
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                    {subscriptions.map((subscription) => (
-                        <SubscriptionCard openModal={markOpen} toggleSubscription={toggleSubscription} subscription={subscription} key={subscription.id} />
-                    ))}
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead
+                            className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Email
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Estado
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Acción
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {subscriptions.map((subscription) => (
+                                <SubscriptionCard openModal={markOpen} toggleSubscription={toggleSubscription} subscription={subscription} key={subscription.id} />
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             ) : (
                 <div className="w-full h-full my-20 flex items-center flex-wrap justify-center gap-10">
@@ -71,7 +89,8 @@ export default function SubscriptionsTable() {
                 <div
                     className="px-2 no-scrollbar relative w-full max-w-md text-center overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11 items-center">
                     <div className="flex justify-center mb-4 ">
-                        <TrashBinIcon className='text-red-500 p-2 rounded-full border-2 border-red-500' width={50} height={50}/>
+                        <TrashBinIcon className='text-red-500 p-2 rounded-full border-2 border-red-500' width={50}
+                                      height={50}/>
                     </div>
                     <div>
                         <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
