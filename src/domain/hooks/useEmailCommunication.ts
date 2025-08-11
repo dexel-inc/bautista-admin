@@ -10,7 +10,6 @@ export interface CommunicationConfig {
     description: string;
     fileLabel: string;
     subjectPrefix: string;
-    recipients: 'missionaries' | 'members';
 }
 
 export function useEmailCommunication(config: CommunicationConfig) {
@@ -31,7 +30,7 @@ export function useEmailCommunication(config: CommunicationConfig) {
         setModalState('loading');
         
         try {
-            const result = config.type === 'prayletter' 
+            const result = config.type === 'prayletter'
                 ? await emailService.sendPrayLetter(data)
                 : await emailService.sendNewsletter(data);
 
