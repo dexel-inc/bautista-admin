@@ -1,11 +1,34 @@
 import { useMissionaries } from "@/domain/hooks/useMissionary.ts";
-import { PlusIcon } from "@/presentation/icons";
+import {PlusIcon, TrashBinIcon} from "@/presentation/icons";
 import MissionaryCard from "@/presentation/components/form/MissionaryCard.tsx";
 import { Missionary } from "@/domain/models/Missionary.ts";
 import {Link} from "react-router";
+import {useModal} from "@/domain/hooks/useModal.ts";
+import {useState} from "react";
+import Button from "@/presentation/components/ui/button/Button.tsx";
+import {Modal} from "@/presentation/components/ui/modal";
 
 export default function MissionariesTable() {
-    const { missionaries, loading, updateMissionary } = useMissionaries();
+    const { missionaries, loading, updateMissionary, deleteMissionary } = useMissionaries();
+    const { isOpen, closeModal, openModal } = useModal();
+    const [selectedMissionary, setSelectedMissionary] = useState<null|Missionary>(null);
+
+
+    const markOpen = (missionary: Missionary) => {
+        openModal();
+        setSelectedMissionary(missionary);
+        return true;
+    }
+
+    const deleteSelectedMissionary = () => {
+        if(selectedMissionary) {
+            deleteMissionary(selectedMissionary.id)
+        }
+
+        closeModal();
+        setSelectedMissionary(null);
+    }
+
 
     const toggleMissionary = async (missionary: Missionary, isActive: boolean) => {
         await updateMissionary(missionary, { isEnabled: isActive });
@@ -16,11 +39,35 @@ export default function MissionariesTable() {
     return (
         <>
             {missionaries.length ? (
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                    {missionaries.map((missionary) => (
-                        <MissionaryCard toggleMissionary={toggleMissionary} missionary={missionary} key={missionary.id} />
-                    ))}
-                </div>
+                <>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                        {missionaries.map((missionary) => (
+                            <MissionaryCard toggleMissionary={toggleMissionary} deleteMissionary={markOpen} missionary={missionary} key={missionary.id} />
+                        ))}
+                    </div>
+                    <Modal isOpen={isOpen} onClose={closeModal} className="max-w-md m-4">
+                        <div
+                            className="px-2 no-scrollbar relative w-full max-w-md text-center overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11 items-center">
+                            <div className="flex justify-center mb-4 ">
+                                <TrashBinIcon className='text-red-500 p-2 rounded-full border-2 border-red-500' width={50}
+                                              height={50}/>
+                            </div>
+                            <div>
+                                <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+                                    ¿Realmente desea eliminar <strong>{selectedMissionary?.title}</strong>?
+                                </h4>
+                                <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
+                                    Si haces esto dejarás de ver este misionero en la pagina principal
+                                </p>
+                            </div>
+                            <div className="flex items-center justify-center gap-3 px-2 mt-6 w-full">
+                                <Button variant='danger' onClick={deleteSelectedMissionary} size="sm">
+                                    Eliminar
+                                </Button>
+                            </div>
+                        </div>
+                    </Modal>
+                </>
             ) : (
                 <div className="w-full h-full my-20 flex items-center flex-wrap justify-center gap-10">
                     <div className="grid gap-4 w-60">

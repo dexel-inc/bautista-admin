@@ -65,8 +65,7 @@ export default function MissionaryForm() {
         delete newErrors.general;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!value.trim()) newErrors.contactEmail = "El correo electrónico es requerido";
-        else if (!emailRegex.test(value)) newErrors.contactEmail = "Formato de correo inválido";
+        if (value && !emailRegex.test(value)) newErrors.contactEmail = "Formato de correo inválido";
         else delete newErrors.contactEmail;
 
         setErrors(newErrors);
@@ -97,10 +96,9 @@ export default function MissionaryForm() {
         const isContactNameValid = contactName.trim() === "" || contactName.trim().length >= 3;
         
         return (
-            familyName.trim().length >= 3 && 
-            contactEmail.trim().length > 0 && 
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail) && 
-            (!!uploadFile || !!missionary) &&
+            familyName.trim().length >= 3 &&
+            (!contactEmail || (/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(contactEmail))
+            && (!!uploadFile || !!missionary) &&
             isContactNameValid
         );
     };
@@ -115,7 +113,7 @@ export default function MissionaryForm() {
                 email: contactEmail.trim(),
             },
             imageFile: uploadFile ?? null,
-            status: "active",
+            isEnabled: missionary?.isEnabled ?? true,
         };
 
         try {
@@ -172,7 +170,7 @@ export default function MissionaryForm() {
                         </div>
 
                         <div className="w-full">
-                            <label className="block text-sm font-medium dark:text-white">Correo electrónico <span className="text-error-500">*</span></label>
+                            <label className="block text-sm font-medium dark:text-white">Correo electrónico</label>
                             <input
                                 type="email"
                                 value={contactEmail}

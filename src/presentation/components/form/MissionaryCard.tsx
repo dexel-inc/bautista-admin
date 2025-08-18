@@ -1,5 +1,5 @@
 import ComponentCard from "@/presentation/components/common/ComponentCard.tsx";
-import {MoreDotIcon, NotFoundProfile, PencilIcon} from "@/presentation/icons";
+import {MoreDotIcon, NotFoundProfile, PencilIcon, TrashBinIcon} from "@/presentation/icons";
 import {Dropdown} from "@/presentation/components/ui/dropdown/Dropdown.tsx";
 import {DropdownItem} from "@/presentation/components/ui/dropdown/DropdownItem.tsx";
 import {useDropdown} from "@/domain/hooks/useDropdown.ts";
@@ -10,10 +10,11 @@ import Toggle from "@/presentation/components/ui/toggle/Toggle.tsx";
 interface MissionaryProps {
   missionary: Missionary;
   toggleMissionary: (missionary: Missionary, isActive: boolean) => {},
+  deleteMissionary: (missionary: Missionary) => boolean,
 }
 
 
-export default function MissionaryCard({missionary, toggleMissionary}: MissionaryProps) {
+export default function MissionaryCard({missionary, toggleMissionary, deleteMissionary}: MissionaryProps) {
   const { isOpenDropdown, toggleDropdown, closeDropdown } = useDropdown();
 
   return (
@@ -53,6 +54,18 @@ export default function MissionaryCard({missionary, toggleMissionary}: Missionar
                     <PencilIcon />
                     Editar
                   </Link>
+                </DropdownItem>
+                <DropdownItem
+                    tag="simple"
+                    className="flex w-full gap-4 items-center font-normal text-left text-red-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg"
+                >
+                  <button
+                      type="button"
+                      onClick={() => deleteMissionary(missionary) && closeDropdown()}
+                      className='flex gap-4 w-full items-center'>
+                    <TrashBinIcon />
+                    Eliminar
+                  </button>
                 </DropdownItem>
                 <DropdownItem
                     tag="simple"
