@@ -7,15 +7,17 @@ import {useModal} from "@/domain/hooks/useModal.ts";
 import {useState} from "react";
 import Button from "@/presentation/components/ui/button/Button.tsx";
 import {Modal} from "@/presentation/components/ui/modal";
+import MissionaryPrayLetterModal from "@/presentation/components/modals/MissionaryPrayLetterModal";
 
 export default function MissionariesTable() {
     const { missionaries, loading, updateMissionary, deleteMissionary } = useMissionaries();
-    const { isOpen, closeModal, openModal } = useModal();
+    const { isOpen: isDeleteModalOpen, closeModal: closeDeleteModal, openModal: openDeleteModal } = useModal();
+    const { isOpen: isPrayLetterModalOpen, closeModal: closePrayLetterModal, openModal: openPrayLetterModal } = useModal();
     const [selectedMissionary, setSelectedMissionary] = useState<null|Missionary>(null);
 
 
-    const markOpen = (missionary: Missionary) => {
-        openModal();
+    const markOpenDelete = (missionary: Missionary) => {
+        openDeleteModal();
         setSelectedMissionary(missionary);
         return true;
     }
@@ -25,8 +27,13 @@ export default function MissionariesTable() {
             deleteMissionary(selectedMissionary.id)
         }
 
-        closeModal();
+        closeDeleteModal();
         setSelectedMissionary(null);
+    }
+
+    const openPrayLetterModalForMissionary = (missionary: Missionary) => {
+        setSelectedMissionary(missionary);
+        openPrayLetterModal();
     }
 
 
@@ -42,10 +49,16 @@ export default function MissionariesTable() {
                 <>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                         {missionaries.map((missionary) => (
-                            <MissionaryCard toggleMissionary={toggleMissionary} deleteMissionary={markOpen} missionary={missionary} key={missionary.id} />
+                            <MissionaryCard 
+                                toggleMissionary={toggleMissionary} 
+                                deleteMissionary={markOpenDelete} 
+                                openPrayLetterModal={openPrayLetterModalForMissionary}
+                                missionary={missionary} 
+                                key={missionary.id} 
+                            />
                         ))}
                     </div>
-                    <Modal isOpen={isOpen} onClose={closeModal} className="max-w-md m-4">
+                    <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal} className="max-w-md m-4">
                         <div
                             className="px-2 no-scrollbar relative w-full max-w-md text-center overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11 items-center">
                             <div className="flex justify-center mb-4 ">
@@ -67,6 +80,12 @@ export default function MissionariesTable() {
                             </div>
                         </div>
                     </Modal>
+                    
+                    <MissionaryPrayLetterModal 
+                        isOpen={isPrayLetterModalOpen} 
+                        onClose={closePrayLetterModal}
+                        missionary={selectedMissionary}
+                    />
                 </>
             ) : (
                 <div className="w-full h-full my-20 flex items-center flex-wrap justify-center gap-10">

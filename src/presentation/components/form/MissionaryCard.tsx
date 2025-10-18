@@ -1,5 +1,5 @@
 import ComponentCard from "@/presentation/components/common/ComponentCard.tsx";
-import {MoreDotIcon, NotFoundProfile, PencilIcon, TrashBinIcon} from "@/presentation/icons";
+import {MoreDotIcon, NotFoundProfile, PaperPlaneIcon, PencilIcon, TrashBinIcon} from "@/presentation/icons";
 import {Dropdown} from "@/presentation/components/ui/dropdown/Dropdown.tsx";
 import {DropdownItem} from "@/presentation/components/ui/dropdown/DropdownItem.tsx";
 import {useDropdown} from "@/domain/hooks/useDropdown.ts";
@@ -11,10 +11,11 @@ interface MissionaryProps {
   missionary: Missionary;
   toggleMissionary: (missionary: Missionary, isActive: boolean) => {},
   deleteMissionary: (missionary: Missionary) => boolean,
+  openPrayLetterModal: (missionary: Missionary) => void,
 }
 
 
-export default function MissionaryCard({missionary, toggleMissionary, deleteMissionary}: MissionaryProps) {
+export default function MissionaryCard({missionary, toggleMissionary, deleteMissionary, openPrayLetterModal}: MissionaryProps) {
   const { isOpenDropdown, toggleDropdown, closeDropdown } = useDropdown();
 
   return (
@@ -54,6 +55,21 @@ export default function MissionaryCard({missionary, toggleMissionary, deleteMiss
                     <PencilIcon />
                     Editar
                   </Link>
+                </DropdownItem>
+                <DropdownItem
+                    tag="simple"
+                    className="flex w-full gap-4 items-center font-normal text-left text-brand-500 hover:text-brand-600 hover:bg-brand-500/10 rounded-lg"
+                >
+                  <button
+                      type="button"
+                      onClick={() => {
+                        openPrayLetterModal(missionary);
+                        closeDropdown();
+                      }}
+                      className='flex gap-4 w-full items-center'>
+                    <PaperPlaneIcon />
+                     Carta
+                  </button>
                 </DropdownItem>
                 <DropdownItem
                     tag="simple"
